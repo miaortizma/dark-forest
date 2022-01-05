@@ -22,7 +22,7 @@ template Main() {
     /* check x^2 + y^2 > 32 */
     component comp0 = GreaterThan(64);
     xSq + ySq ==> comp0.in[0];
-    32 ==> comp0.in[1];
+    32 * 32 ==> comp0.in[1];
     comp0.out === 1;
     log(1111111);
     /* check x^2 + y^2 < r^2 */
