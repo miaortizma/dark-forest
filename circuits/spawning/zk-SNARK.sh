@@ -1,11 +1,4 @@
 circom spawning.circom --r1cs --wasm --sym --c
-cd spawning_js
-# Computation of the witness
-echo "GENERATING WITNESS"
-node generate_witness.js spawning.wasm ../input.json witness.wtns
-
-cp witness.wtns ../
-cd ..
 
 # Powers of tau Ceremony, generation of secret, and verification and proof keys
 # First phase
@@ -23,6 +16,14 @@ snarkjs groth16 setup spawning.r1cs pot12_final.ptau spawning_0000.zkey
 # add some random noise again
 snarkjs zkey contribute spawning_0000.zkey spawning_0001.zkey --name="1st Contributor Name" -v
 snarkjs zkey export verificationkey spawning_0001.zkey verification_key.json
+
+# Computation of the witness
+cd spawning_js
+echo "GENERATING WITNESS"
+node generate_witness.js spawning.wasm ../input.json witness.wtns
+
+cp witness.wtns ../
+cd ..
 
 # Generate a Groth16 ZK proof
 snarkjs groth16 prove spawning_0001.zkey ./spawning_js/witness.wtns proof.json public.json

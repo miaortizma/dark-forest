@@ -1,6 +1,6 @@
 pragma circom 2.0.0;
-include "../node_modules/circomlib/circuits/mimcsponge.circom";
-include "../node_modules/circomlib/circuits/comparators.circom";
+include "../../node_modules/circomlib/circuits/mimcsponge.circom";
+include "../../node_modules/circomlib/circuits/comparators.circom";
 
 template Main() {
     signal input x;
@@ -19,11 +19,12 @@ template Main() {
     ySq <== y * y;
     rSq <== r * r;
 
-    /* check x^2 + y^2 > 32 */
+    /* check x^2 + y^2 > 32 * 32 */
     component comp0 = GreaterThan(64);
     xSq + ySq ==> comp0.in[0];
     32 * 32 ==> comp0.in[1];
     comp0.out === 1;
+    log(comp0.out);
     log(1111111);
     /* check x^2 + y^2 < r^2 */
     component comp1 = LessEqThan(64);
